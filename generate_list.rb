@@ -1,4 +1,4 @@
-filename = 'Words/Words/en.txt'
+filename = 'google-10000-english/google-10000-english.txt'
 
 File.open("hangman_word_list.txt", "w") do |file|
   File.open(filename).each_line do |line|
