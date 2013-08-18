@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 def choose_word file
-  File.readlines(file).sample
+  File.readlines(file).sample.strip
 end
 
 def get_guess guessed_array
@@ -29,20 +29,50 @@ end
 
 def print_word guessed_array, word
   display_word = ""
-  secret_word.each_char do |c|
+  word.each_char do |c|
     if guessed_array.include? c
       display_word += c
     else
-      display_word += _
+      display_word += "_"
     end
+  end
+  display_word
+end
+
+def check_letter word, letter
+  if word.include? letter
+    x = 0
+    word.each_char { |c| x += 1 if c == letter }
+    puts "Good guess! My secret word contains #{x} occurrences of the letter #{letter}."
+  end
+end
+
+def game file
+  turns = 8
+  secret_word = choose_word file
+  guessed_array = []
+  while turns > 0
+    puts print_word guessed_array, secret_word
+    guess = get_guess guessed_array
+    guessed_array << guess
+    if guess == secret_word
+      puts "You win!"
+      break
+    elsif guess.length == 1
+      check_letter secret_word, guess
+    else
+      puts "sorry that's not the right word"
+    end
+    if (print_word guessed_array, secret_word) == secret_word
+      puts "You win!"
+      break
+    end
+    turns -= 1
+    puts "You have #{turns} turns left"
+  end
+  puts "You lose. My word was #{secret_word}." if turns == 0
 end
 
 wordfile = '1000words.txt'
 
-secret_word = choose_word wordfile
-
-guessed_array = ["a","b","c","d","e","f","g","h","i","j","k"]
-
-get_guess(guessed_array)
-
-print_word(guessed_array, "secret")
+game wordfile
