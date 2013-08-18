@@ -44,6 +44,8 @@ def check_letter word, letter
     x = 0
     word.each_char { |c| x += 1 if c == letter }
     puts "Good guess! My secret word contains #{x} occurrences of the letter #{letter}."
+  else
+    puts "Sorry, that letter is not in my word."
   end
 end
 
@@ -52,23 +54,24 @@ def game file
   secret_word = choose_word file
   guessed_array = []
   while turns > 0
+    puts "You have #{turns} turns left"
+    puts "The word is: "
     puts print_word guessed_array, secret_word
     guess = get_guess guessed_array
     guessed_array << guess
     if guess == secret_word
-      puts "You win!"
+      puts "That's right! You win!"
       break
     elsif guess.length == 1
       check_letter secret_word, guess
     else
-      puts "sorry that's not the right word"
+      puts "Sorry, that's not the right word."
     end
     if (print_word guessed_array, secret_word) == secret_word
-      puts "You win!"
+      puts "You win! My word was #{secret_word}"
       break
     end
     turns -= 1
-    puts "You have #{turns} turns left"
   end
   puts "You lose. My word was #{secret_word}." if turns == 0
 end
