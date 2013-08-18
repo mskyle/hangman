@@ -4,29 +4,37 @@ def choose_word file
   File.readlines(file).sample
 end
 
-def get_guess 
+def get_guess guessed_array
   print "Guess a letter or a word: "
   guess = gets.chomp
-  if valid_guess guess
+  if valid_guess(guess, guessed_array)
     return guess
   else
     puts "Invalid input."
-    get_guess 
+    get_guess(guessed_array)
   end
 end
 
-def valid_guess
-  # checks to see whether
-    # guess includes non-letter characters
-      # if it includes non-letter characters, gives error message ("Sorry, guesses should be letters only!") and re-requests guess
-    # guess has already been guessed
-      # if already guessed, gives error message ("You already guessed that!") and re-requests guess
-    # guess is a letter or a word
-      # if letter, returns :letter
-      # if word, returns :word
+def valid_guess guess, guessed_array
+  if not guess.match(/^[[:alpha:]]+$/) 
+    puts "Sorry, please enter only characters a to z."
+    return false
+  elsif guessed_array.include? guess
+    puts "You already guessed that! Try again."
+    return false
+  else
+    return true
+  end
+end
+
+def print_word guessed_array, word
+  # if letter is in guessed_array, put letter, else put underscore
 end
 
 wordfile = '1000words.txt'
 
 secret_word = choose_word wordfile
 
+guessed_array = []
+
+get_guess(guessed_array)
