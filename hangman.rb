@@ -28,13 +28,21 @@ def valid_guess guess, guessed_array
 end
 
 def print_word guessed_array, word
-  # if letter is in guessed_array, put letter, else put underscore
+  display_word = ""
+  secret_word.each_char do |c|
+    if guessed_array.include? c
+      display_word += c
+    else
+      display_word += _
+    end
 end
 
 wordfile = '1000words.txt'
 
 secret_word = choose_word wordfile
 
-guessed_array = []
+guessed_array = ["a","b","c","d","e","f","g","h","i","j","k"]
 
 get_guess(guessed_array)
+
+print_word(guessed_array, "secret")
